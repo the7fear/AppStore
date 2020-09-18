@@ -15,6 +15,7 @@
 		52A740092514661E007B0510 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52A740072514661E007B0510 /* LaunchScreen.storyboard */; };
 		52A740142514661E007B0510 /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A740132514661E007B0510 /* AppStoreTests.swift */; };
 		52A7401F2514661E007B0510 /* AppStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7401E2514661E007B0510 /* AppStoreUITests.swift */; };
+		52A74031251467D4007B0510 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A74030251467D4007B0510 /* MainTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		52A7401A2514661E007B0510 /* AppStoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppStoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A7401E2514661E007B0510 /* AppStoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreUITests.swift; sourceTree = "<group>"; };
 		52A740202514661E007B0510 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52A74030251467D4007B0510 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				52A73FFC2514661C007B0510 /* AppDelegate.swift */,
 				52A73FFE2514661C007B0510 /* SceneDelegate.swift */,
 				52A740002514661C007B0510 /* ViewController.swift */,
+				52A7402F251467C5007B0510 /* Controllers */,
 				52A740022514661C007B0510 /* Main.storyboard */,
 				52A740052514661E007B0510 /* Assets.xcassets */,
 				52A740072514661E007B0510 /* LaunchScreen.storyboard */,
@@ -126,6 +129,14 @@
 				52A740202514661E007B0510 /* Info.plist */,
 			);
 			path = AppStoreUITests;
+			sourceTree = "<group>";
+		};
+		52A7402F251467C5007B0510 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				52A74030251467D4007B0510 /* MainTabBarController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +271,7 @@
 			files = (
 				52A740012514661C007B0510 /* ViewController.swift in Sources */,
 				52A73FFD2514661C007B0510 /* AppDelegate.swift in Sources */,
+				52A74031251467D4007B0510 /* MainTabBarController.swift in Sources */,
 				52A73FFF2514661C007B0510 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
