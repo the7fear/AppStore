@@ -13,6 +13,8 @@ class HorizontalAppsController: BaseController, UICollectionViewDelegateFlowLayo
   fileprivate let spacing: CGFloat = 8
   fileprivate let topBottomSpacing: CGFloat = 10
   
+  var appsResults: AppsGroups?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -24,11 +26,15 @@ class HorizontalAppsController: BaseController, UICollectionViewDelegateFlowLayo
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return appsResults?.feed.results.count ?? 0
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HorizontalAppCell
+    let result = appsResults?.feed.results[indexPath.item]
+    cell.companyName.text = result?.artistName
+    cell.nameLabel.text = result?.name
+    cell.imageView.sd_setImage(with: URL(string: result?.artworkUrl100 ?? ""))
     return cell
   }
   
