@@ -11,10 +11,22 @@ class Service {
   
   static let shared = Service()
   
-  func fetchApps(completion: @escaping (AppsGroups?, Error?) -> Void) {
-    
+  func fetchNewGames(completion: @escaping (AppsGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-games-we-love/all/25/explicit.json"
-    
+    fetchApps(urlString: urlString, completion: completion)
+  }
+  
+  func fetchTopFree(completion: @escaping (AppsGroup?, Error?) -> Void) {
+    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
+    fetchApps(urlString: urlString, completion: completion)
+  }
+  
+  func fetchTopGrossing(completion: @escaping (AppsGroup?, Error?) -> Void) {
+    let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
+    fetchApps(urlString: urlString, completion: completion)
+  }
+  
+  func fetchApps<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> Void) {
     guard let url = URL(string: urlString) else { return }
     
     URLSession.shared.dataTask(with: url) { (data, _, error) in
@@ -26,9 +38,8 @@ class Service {
       guard let data = data else { return }
       
       do {
-        let appGroup = try JSONDecoder().decode(AppsGroups.self, from: data)
-        appGroup.feed.results.forEach({print($0.artistName)})
-        completion(appGroup, nil)
+        let object = try JSONDecoder().decode(T.self, from: data)
+        completion(object, nil)
       } catch let jsonError {
         print("Failed to decode data", jsonError)
         completion(nil, jsonError)

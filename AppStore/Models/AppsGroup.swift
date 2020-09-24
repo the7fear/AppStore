@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct AppsGroups: Decodable {
+struct AppsGroup: Decodable {
   let feed: Feed
 }
 

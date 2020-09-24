@@ -13,7 +13,7 @@ class HorizontalAppsController: BaseController, UICollectionViewDelegateFlowLayo
   fileprivate let spacing: CGFloat = 8
   fileprivate let topBottomSpacing: CGFloat = 10
   
-  var appsResults: AppsGroups?
+  var appsResults: AppsGroup?
   
   override func viewDidLoad() {
     super.viewDidLoad()

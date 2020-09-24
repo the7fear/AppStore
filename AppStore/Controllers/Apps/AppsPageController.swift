@@ -11,7 +11,7 @@ import SDWebImage
 class AppsPageController: BaseController, UICollectionViewDelegateFlowLayout {
   
   private let cellId = "CellId"
-  var results: AppsGroups?
+  var groups = [AppsGroup]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -22,8 +22,44 @@ class AppsPageController: BaseController, UICollectionViewDelegateFlowLayout {
   }
   
   fileprivate func fetchITunesApps() {
-    Service.shared.fetchApps { (results, error) in
-      self.results = results
+    
+    var group1: AppsGroup?
+    var group2: AppsGroup?
+    var group3: AppsGroup?
+    
+    let dispatchGroup = DispatchGroup()
+    
+    dispatchGroup.enter()
+    Service.shared.fetchNewGames { (results, error) in
+      dispatchGroup.leave()
+      group1 = results
+    }
+    
+    dispatchGroup.enter()
+    Service.shared.fetchTopFree { (results, error) in
+      dispatchGroup.leave()
+      group2 = results
+    }
+    
+    dispatchGroup.enter()
+    Service.shared.fetchTopGrossing { (results, error) in
+      dispatchGroup.leave()
+      group3 = results
+    }
+    
+    dispatchGroup.notify(queue: .main) {
+      
+      if let group = group1 {
+        self.groups.append(group)
+      }
+      
+      if let group = group2 {
+        self.groups.append(group)
+      }
+      
+      if let group = group3 {
+        self.groups.append(group)
+      }
       
       DispatchQueue.main.async {
         self.collectionView.reloadData()
@@ -32,13 +68,14 @@ class AppsPageController: BaseController, UICollectionViewDelegateFlowLayout {
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 1
+    return groups.count
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppPageCell
-    cell.horizontalAppsController.appsResults = results
-    cell.titleLabel.text = results?.feed.title
+    let result = groups[indexPath.item]
+    cell.horizontalAppsController.appsResults = result
+    cell.titleLabel.text = result.feed.title
     cell.horizontalAppsController.collectionView.reloadData()
     return cell
   }
