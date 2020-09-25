@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HorizontalAppsController: BaseController, UICollectionViewDelegateFlowLayout {
+class HorizontalAppsController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout {
   
   fileprivate let cellId = "CellId"
   fileprivate let spacing: CGFloat = 8
@@ -20,9 +20,7 @@ class HorizontalAppsController: BaseController, UICollectionViewDelegateFlowLayo
     
     collectionView.backgroundColor = .white
     collectionView.register(HorizontalAppCell.self, forCellWithReuseIdentifier: cellId)
-    if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-      layout.scrollDirection = .horizontal
-    }
+    collectionView.contentInset = .init(top: 0, left: 12, bottom: 0, right: 12)
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -47,7 +45,7 @@ class HorizontalAppsController: BaseController, UICollectionViewDelegateFlowLayo
     return spacing
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return .init(top: topBottomSpacing, left: 12, bottom: topBottomSpacing, right: 12)
-  }
+//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//    return .init(top: topBottomSpacing, left: 12, bottom: topBottomSpacing, right: 12)
+//  }
 }

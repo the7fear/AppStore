@@ -25,7 +25,7 @@ class HeaderHorizontalCell: UICollectionViewCell {
     
     let stackView = VerticalStackView(arrangedSubviews: [companyLabel, titleLabel, imageView], spacing: 8)
     addSubview(stackView)
-    stackView.fillSuperview(padding: .init(top: 10, left: 10, bottom: 10, right: 10))
+    stackView.fillSuperview()
   }
   
   required init?(coder: NSCoder) {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeaderHorizontalController: BaseController, UICollectionViewDelegateFlowLayout {
+class HeaderHorizontalController: HorizontalSnappingController, UICollectionViewDelegateFlowLayout {
   
   fileprivate let cellId = "CellId"
   var socialApps = [SocialApp]()
@@ -16,10 +16,7 @@ class HeaderHorizontalController: BaseController, UICollectionViewDelegateFlowLa
     super.viewDidLoad()
     collectionView.backgroundColor = .white
     collectionView.register(HeaderHorizontalCell.self, forCellWithReuseIdentifier: cellId)
-    
-    if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-      layout.scrollDirection = .horizontal
-    }
+    collectionView.contentInset = .init(top: 0, left: 12, bottom: 0, right: 12)
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
