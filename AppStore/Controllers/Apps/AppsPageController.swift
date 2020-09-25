@@ -11,15 +11,53 @@ import SDWebImage
 class AppsPageController: BaseController, UICollectionViewDelegateFlowLayout {
   
   private let cellId = "CellId"
+  private let headerId = "HeaderId"
   var groups = [AppsGroup]()
+  var socialApps = [SocialApp]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     collectionView.backgroundColor = .white
     collectionView.register(AppPageCell.self, forCellWithReuseIdentifier: cellId)
+    collectionView.register(AppPageHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+  
     fetchITunesApps()
   }
+  
+  //MARK: - Header
+  
+  override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppPageHeaderCell
+    header.headerHorizontalController.socialApps = socialApps
+    header.headerHorizontalController.collectionView.reloadData()
+    return header
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return .init(width: view.frame.width, height: 300)
+  }
+  
+  // MARK: - Cell
+  
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return groups.count
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppPageCell
+    let result = groups[indexPath.item]
+    cell.horizontalAppsController.appsResults = result
+    cell.titleLabel.text = result.feed.title
+    cell.horizontalAppsController.collectionView.reloadData()
+    return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return .init(width: view.frame.width, height: 300)
+  }
+  
+  // MARK: - Methods
   
   fileprivate func fetchITunesApps() {
     
@@ -47,6 +85,10 @@ class AppsPageController: BaseController, UICollectionViewDelegateFlowLayout {
       group3 = results
     }
     
+    Service.shared.fetchSocialApps { (results, error) in
+      self.socialApps = results ?? []
+    }
+    
     dispatchGroup.notify(queue: .main) {
       
       if let group = group1 {
@@ -65,22 +107,5 @@ class AppsPageController: BaseController, UICollectionViewDelegateFlowLayout {
         self.collectionView.reloadData()
       }
     }
-  }
-  
-  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return groups.count
-  }
-  
-  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppPageCell
-    let result = groups[indexPath.item]
-    cell.horizontalAppsController.appsResults = result
-    cell.titleLabel.text = result.feed.title
-    cell.horizontalAppsController.collectionView.reloadData()
-    return cell
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return .init(width: view.frame.width, height: 300)
   }
 }

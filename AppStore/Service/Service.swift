@@ -11,6 +11,11 @@ class Service {
   
   static let shared = Service()
   
+  func fetchSocialApps(completion: @escaping ([SocialApp]?, Error?) -> Void) {
+    let urlString = "http://api.letsbuildthatapp.com/appstore/social"
+    fetchApps(urlString: urlString, completion: completion)
+  }
+  
   func fetchNewGames(completion: @escaping (AppsGroup?, Error?) -> Void) {
     let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-games-we-love/all/25/explicit.json"
     fetchApps(urlString: urlString, completion: completion)

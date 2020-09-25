@@ -17,5 +17,4 @@ target 'AppStore' do
   target 'AppStoreUITests' do
     # Pods for testing
   end
-
 end
