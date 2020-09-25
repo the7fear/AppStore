@@ -11,9 +11,8 @@ class Service {
   
   static let shared = Service()
   
-  func fetchSearchResults(completion: @escaping (SearchResults?, Error?) -> Void) {
-    
-    let urlString = "https://itunes.apple.com/search?term=twitter&entity=software"
+  func fetchSearchResults(searchText: String, completion: @escaping (SearchResults?, Error?) -> Void) {
+    let urlString = "https://itunes.apple.com/search?term=\(searchText)&entity=software"
     fetchApps(urlString: urlString, completion: completion)
   }
   
